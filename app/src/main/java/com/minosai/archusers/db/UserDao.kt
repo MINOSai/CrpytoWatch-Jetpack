@@ -15,9 +15,12 @@ interface UserDao {
     @Insert
     fun insertUser(vararg user: User)
 
+    @Query("SELECT COUNT(*) FROM user")
+    fun getUsersCount(): Int
+
     @Query("SELECT * FROM user")
     fun getAllUsers(): LiveData<List<User>>
 
     @Query("SELECT * FROM user WHERE id = :id")
-    fun getUserById(): LiveData<User>
+    fun getUserById(id: String): LiveData<User>
 }

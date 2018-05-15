@@ -12,7 +12,7 @@ class UserRepo(context: Context) {
 
     private var webService: WebService = WebService.create()
 
-    fun getUsers() {
-
+    fun getUsers(context: Context) {
+        UserDatabase.getInstance(context)?.userDao()?.getAllUsers()
     }
 }
