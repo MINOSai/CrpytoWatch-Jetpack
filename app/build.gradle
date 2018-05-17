@@ -6,7 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-ext.anko_version='0.10.5'
+apply plugin: 'androidx.navigation.safeargs'
+
+ext.anko_version = '0.10.5'
 
 android {
     compileSdkVersion 27
@@ -31,12 +33,13 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // Kotlin
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3"
 
@@ -48,6 +51,10 @@ dependencies {
 
     // LiveData
     implementation "android.arch.lifecycle:livedata:1.1.0"
+
+    // Navigation
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha01'
+    implementation 'android.arch.navigation:navigation-ui:1.0.0-alpha01'
 
     // GSON
     compile 'com.google.code.gson:gson:2.8.2'
