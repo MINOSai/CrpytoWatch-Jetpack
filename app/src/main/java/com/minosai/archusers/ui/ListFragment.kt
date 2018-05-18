@@ -8,14 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.minosai.archusers.R
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.jetbrains.anko.bundleOf
 
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+//private const val ARG_PARAM1 = "param1"
+//private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -28,36 +31,41 @@ private const val ARG_PARAM2 = "param2"
  */
 class ListFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+//    private var param1: String? = null
+//    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        arguments?.let {
+//            param1 = it.getString(ARG_PARAM1)
+//            param2 = it.getString(ARG_PARAM2)
+//        }
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        listener?.onFragmentInteraction("Users")
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        text_list.setOnClickListener {
-            Navigation.createNavigateOnClickListener(
-                R.id.action_listFragment_to_infoFragment)
-        }
+        var bundle = bundleOf("userid" to 1)
+        button_list.setOnClickListener(Navigation.createNavigateOnClickListener(
+                R.id.action_listFragment_to_infoFragment, bundle))
+
+        // Below method is used if we want to do something on button click and then move to another fragment
+//        button_list.setOnClickListener { view ->
+//            view.findNavController().navigate(R.id.action_listFragment_to_infoFragment, bundle)
+//        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(string: String) {
+        listener?.onFragmentInteraction(string)
     }
 
     override fun onAttach(context: Context) {
@@ -87,7 +95,7 @@ class ListFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onFragmentInteraction(string: String)
     }
 
     companion object {
@@ -100,13 +108,15 @@ class ListFragment : Fragment() {
          * @return A new instance of fragment ListFragment.
          */
         // TODO: Rename and change types and number of parameters
+//        @JvmStatic
+//        fun newInstance(param1: String, param2: String) =
+//                ListFragment().apply {
+//                    arguments = Bundle().apply {
+//                        putString(ARG_PARAM1, param1)
+//                        putString(ARG_PARAM2, param2)
+//                    }
+//                }
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                ListFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+        fun newInstance() = ListFragment()
     }
 }

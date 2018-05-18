@@ -11,11 +11,22 @@
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
+            app:destination="@id/infoFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left">
+            <argument
+                android:name="userid"
+                android:defaultValue="0" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.minosai.archusers.ui.InfoFragment"
         android:label="fragment_info"
-        tools:layout="@layout/fragment_info" />
+        tools:layout="@layout/fragment_info" >
+        <argument
+            android:name="userid"
+            android:defaultValue="0"
+            app:type="integer" />
+    </fragment>
 </navigation>
