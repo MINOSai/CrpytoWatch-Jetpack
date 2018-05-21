@@ -54,8 +54,8 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var bundle = bundleOf("userid" to 1)
-        button_list.setOnClickListener(Navigation.createNavigateOnClickListener(
-                R.id.action_listFragment_to_infoFragment, bundle))
+//        button_list.setOnClickListener(Navigation.createNavigateOnClickListener(
+//                R.id.action_listFragment_to_infoFragment, bundle))
 
         // Below method is used if we want to do something on button click and then move to another fragment
 //        button_list.setOnClickListener { view ->
