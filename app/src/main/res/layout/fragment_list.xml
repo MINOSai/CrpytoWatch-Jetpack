@@ -17,14 +17,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_user" />
 
-    <Button
-        android:id="@+id/button_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="list"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 </android.support.constraint.ConstraintLayout>
