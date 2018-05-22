@@ -11,23 +11,23 @@ import com.minosai.archusers.model.User
  */
 
 @Database(entities = [(User::class)], version = 1)
-abstract class UserDatabase: RoomDatabase() {
+abstract class CryptoDatabase: RoomDatabase() {
 
-    abstract fun userDao(): UserDao
+    abstract fun cryptoDao(): CryptoDao
 
     companion object {
-        private const val DATABASE_NAME = "userdatabase"
-        private var INSTANCE: UserDatabase? = null
+        private const val DATABASE_NAME = "cryptodatabase"
+        private var INSTANCE: CryptoDatabase? = null
 
-        fun getInstance(context: Context): UserDatabase? {
+        fun getInstance(context: Context): CryptoDatabase {
             INSTANCE?.let {
                 INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        UserDatabase::class.java,
+                        CryptoDatabase::class.java,
                         DATABASE_NAME
                 ).build()
             }
-            return INSTANCE
+            return INSTANCE!!
         }
 
         fun destroyInstance() {
