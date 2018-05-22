@@ -1,9 +1,11 @@
 package com.minosai.archusers.ui
 
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toolbar
@@ -25,6 +27,13 @@ class MainActivity : AppCompatActivity(),
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
 //        }
+
+        val resId = resources.getIdentifier(
+                "btc",
+                "drawable",
+                packageName
+        )
+        Log.i("RESID_CHECK", resId.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -48,4 +57,14 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSupportNavigateUp(): Boolean = Navigation.findNavController(this, R.id.fragment_nav_host).navigateUp()
+
+    fun getResId(resName: String, c: Class<*>): Int {
+        try {
+            val idField = c.getDeclaredField(resName)
+            return idField.getInt(idField)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return -1
+        }
+    }
 }

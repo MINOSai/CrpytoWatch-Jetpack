@@ -6,12 +6,13 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card_currency_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,41 +28,40 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/image_currency_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:text="BTC | BitCoin"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/eth" />
+                    app:srcCompat="@drawable/btc" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/text_currency_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-                    app:layout_constraintStart_toEndOf="@+id/imageView6"
-                    app:layout_constraintTop_toTopOf="@+id/imageView6"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_currency_logo"
+                    app:layout_constraintStart_toEndOf="@+id/image_currency_logo"
+                    app:layout_constraintTop_toTopOf="@+id/image_currency_logo"
                     tools:text="BTC | Bitcoin" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/text_currency_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_currency_name"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView"
+                    app:layout_constraintTop_toTopOf="@+id/text_currency_name"
                     tools:text="6070.34 $" />
 
             </android.support.constraint.ConstraintLayout>
@@ -74,7 +74,7 @@
                 android:showDividers="middle">
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/text_currency_1h"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -84,7 +84,7 @@
                     tools:text="1h: -0.01" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/text_currency_24h"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -94,7 +94,7 @@
                     tools:text="24h: -1.18" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/text_currency_7d"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
