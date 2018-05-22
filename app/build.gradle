@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: "androidx.navigation.safeargs"
 
+apply plugin: 'kotlin-kapt'
+
 kapt { generateStubs = true }
 
 kapt {
@@ -61,9 +63,11 @@ dependencies {
 
     // Room
     implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
 
-    // LiveData
+    // ViewModel + LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
 
     // Paging
     implementation "android.arch.paging:runtime:$paging_version"

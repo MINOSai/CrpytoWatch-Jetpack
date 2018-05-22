@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.minosai.archusers.ui.ListFragment"
+        android:name="com.minosai.archusers.ui.fragment.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.minosai.archusers.ui.InfoFragment"
+        android:name="com.minosai.archusers.ui.fragment.InfoFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" >
         <argument

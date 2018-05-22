@@ -9,7 +9,6 @@ import com.google.gson.annotations.SerializedName
  * Created by minos.ai on 10/05/18.
  */
 
-@Entity
 data class User(
         @PrimaryKey
         @SerializedName("id") @Expose val id: String = "",

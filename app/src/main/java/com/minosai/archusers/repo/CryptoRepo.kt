@@ -1,6 +1,8 @@
 package com.minosai.archusers.repo
 
 import android.arch.lifecycle.LiveData
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import android.content.Context
 import com.minosai.archusers.db.CryptoDatabase
 import com.minosai.archusers.model.CurrencyData
@@ -16,12 +18,17 @@ class CryptoRepo(context: Context) {
     private var webService: WebService = WebService.create()
     private var database: CryptoDatabase = CryptoDatabase.getInstance(context)
 
-    fun getCryptos(): LiveData<List<CurrencyData>> {
+    fun getCryptos(): LiveData<PagedList<CurrencyData>> {
         val count = database.cryptoDao().getCryptoCount()
         if(count < 1) {
             refreshCryptos()
         }
-        return database.cryptoDao().getAllCryptos()
+
+        val pagedListConfig = PagedList.Config.Builder().setEnablePlaceholders(true)
+                .setPrefetchDistance(10)
+                .setPageSize(20).setEnablePlaceholders(false).build()
+        return LivePagedListBuilder(database.cryptoDao().getAllCryptos(), pagedListConfig)
+                .build()
     }
 
     fun refreshCryptos() {
