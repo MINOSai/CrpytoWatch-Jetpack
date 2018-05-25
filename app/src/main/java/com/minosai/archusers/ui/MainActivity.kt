@@ -7,8 +7,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.Navigation
 import com.minosai.archusers.R
+import com.minosai.archusers.network.WebService
 import com.minosai.archusers.ui.fragment.InfoFragment
 import com.minosai.archusers.ui.fragment.ListFragment
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity(),
         ListFragment.OnFragmentInteractionListener,
@@ -23,6 +27,23 @@ class MainActivity : AppCompatActivity(),
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
 //        }
+
+//        val webService: WebService = WebService.create()
+//        webService.fetchAllCryptos().enqueue(object : Callback<Any> {
+//            override fun onFailure(call: Call<Any>?, t: Throwable?) {
+//                Log.d("API_RESPONSE_FAILURE", "API RESPONSE FAILURE")
+//            }
+//
+//            override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
+//                response?.let {
+//                    if(response.isSuccessful) {
+//                        Log.d("API_RESPONSE", response.body()?.toString())
+////                        database.cryptoDao().insertCryptos(it.body()?.data!!)
+//                    }
+//                }
+//            }
+//
+//        })
 
         val resId = resources.getIdentifier(
                 "btc",

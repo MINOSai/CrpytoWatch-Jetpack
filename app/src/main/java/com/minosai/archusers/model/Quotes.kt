@@ -5,5 +5,5 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Quotes(
-        @SerializedName("price") @Expose @Embedded var usd: Usd = Usd()
+        @SerializedName("USD") @Expose @Embedded var usd: Usd = Usd()
 )
