@@ -5,30 +5,26 @@ import android.content.Context
 import android.graphics.Color
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.ViewGroup
 import com.minosai.archusers.R
 import com.minosai.archusers.model.CurrencyData
-import com.minosai.archusers.model.User
 import com.minosai.archusers.utils.inflate
 import kotlinx.android.synthetic.main.item_crypto.view.*
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import org.jetbrains.anko.image
 import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.wrapContent
 
 
 /**
  * Created by minos.ai on 16/05/18.
  */
 
-class CurrencyAdapter(
+class CryptoAdapter(
         private val listener: (CurrencyData) -> Unit
-) : PagedListAdapter<CurrencyData, CurrencyAdapter.UserViewHolder>(
+) : PagedListAdapter<CurrencyData, CryptoAdapter.UserViewHolder>(
         object : DiffUtil.ItemCallback<CurrencyData>() {
             override fun areItemsTheSame(oldItem: CurrencyData?, newItem: CurrencyData?) = oldItem?.id == newItem?.id
             override fun areContentsTheSame(oldItem: CurrencyData?, newItem: CurrencyData?) = oldItem == newItem
@@ -48,7 +44,7 @@ class CurrencyAdapter(
         fun bind(data: CurrencyData, listener: (CurrencyData) -> Unit) = with(itemView) {
             image_currency_logo.imageResource = getResId(this.context, data.symbol.toLowerCase())
             text_currency_name.text = getCurrencyName(data.symbol, data.name)
-            text_currency_value.text = "${data.quotes.usd.price.toString()} $"
+            text_currency_value.text = "${data.quotes.usd.price} $"
             text_currency_1h.text = getCurrencyChange("1h", data.quotes.usd.change1Hour)
             text_currency_24h.text = getCurrencyChange("24h", data.quotes.usd.change24Hours)
             text_currency_7d.text = getCurrencyChange("7d", data.quotes.usd.change7Days)

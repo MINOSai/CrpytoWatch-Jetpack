@@ -24,5 +24,5 @@ interface CryptoDao {
     fun getAllCryptos(): DataSource.Factory<Int, CurrencyData>
 
     @Query("SELECT * FROM currencydata WHERE id = :id")
-    fun getCryptoById(id: String): LiveData<CurrencyData>
+    fun getCryptoById(id: Int): LiveData<CurrencyData>
 }

@@ -78,4 +78,6 @@ class CryptoRepo(context: Context) {
             })
         }
     }
+
+    fun getCryptoById(id: Int)  = database.cryptoDao().getCryptoById(id)
 }

@@ -1,13 +1,25 @@
 package com.minosai.archusers.ui.fragment
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.minosai.archusers.R
+import com.minosai.archusers.ui.viewmodel.CryptoViewModel
+import com.minosai.archusers.ui.viewmodel.ViewModelFactory
+import com.minosai.archusers.utils.setChangeText
 import kotlinx.android.synthetic.main.fragment_info.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.textColor
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +41,9 @@ class InfoFragment : Fragment() {
 //    private var param1: String? = null
 //    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val cryptoViewModel: CryptoViewModel by lazy {
+        ViewModelProviders.of(activity!!, ViewModelFactory(activity!!.application)).get(CryptoViewModel::class.java)
+    }
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -47,7 +62,35 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button_info.text = arguments?.getInt("cryptoid", 0).toString()
+
+        val cryptoData = async {
+            cryptoViewModel.getCryptoById(arguments?.getInt("cryptoid", 0)!!)
+        }
+        launch(UI) {
+            val currencyData = cryptoData.await()
+            activity?.let {
+                currencyData.observe(it, Observer { data ->
+                    img_info_coin_logo.imageResource = getResId(data!!.symbol.toLowerCase())
+                    text_info_coin_symbol.text = data.symbol
+                    text_info_coin_name.text = data.name
+                    text_info_change_1h.setChangeText(data.quotes.usd.change1Hour)
+                    text_info_change_24h.setChangeText(data.quotes.usd.change24Hours)
+                    text_info_change_7d.setChangeText(data.quotes.usd.change7Days)
+                })
+            }
+        }
+    }
+
+    fun getResId(resName: String): Int {
+        try {
+            return context!!.resources.getIdentifier(
+                    resName,
+                    "drawable",
+                    context!!.packageName
+            )
+        } catch (e: Exception) {
+            return R.drawable.btc
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

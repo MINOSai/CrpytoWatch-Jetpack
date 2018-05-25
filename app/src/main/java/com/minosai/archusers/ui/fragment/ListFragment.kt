@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.minosai.archusers.R
-import com.minosai.archusers.adapter.CurrencyAdapter
+import com.minosai.archusers.adapter.CryptoAdapter
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
 import com.minosai.archusers.ui.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -62,7 +62,7 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = CurrencyAdapter{ currencyData ->
+        val adapter = CryptoAdapter{ currencyData ->
             var bundle = bundleOf("cryptoid" to currencyData.id)
             findNavController().navigate(R.id.action_listFragment_to_infoFragment, bundle)
         }
@@ -91,7 +91,7 @@ class ListFragment : Fragment() {
 //        }
     }
 
-    private fun initRecyclerView(adapter: CurrencyAdapter) {
+    private fun initRecyclerView(adapter: CryptoAdapter) {
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         rv_crypto.layoutManager = linearLayoutManager

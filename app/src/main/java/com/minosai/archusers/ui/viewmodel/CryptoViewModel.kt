@@ -21,4 +21,6 @@ class CryptoViewModel(application : Application) : AndroidViewModel(application)
         cryptoRepo.refreshCryptos()
     }
 
+    fun getCryptoById(id: Int) = cryptoRepo.getCryptoById(id)
+
 }
