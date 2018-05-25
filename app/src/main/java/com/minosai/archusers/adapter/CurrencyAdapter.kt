@@ -48,7 +48,7 @@ class CurrencyAdapter(
         fun bind(data: CurrencyData, listener: (CurrencyData) -> Unit) = with(itemView) {
             image_currency_logo.imageResource = getResId(this.context, data.symbol.toLowerCase())
             text_currency_name.text = getCurrencyName(data.symbol, data.name)
-            text_currency_value.text = data.quotes.usd.price.toString()
+            text_currency_value.text = "${data.quotes.usd.price.toString()} $"
             text_currency_1h.text = getCurrencyChange("1h", data.quotes.usd.change1Hour)
             text_currency_24h.text = getCurrencyChange("24h", data.quotes.usd.change24Hours)
             text_currency_7d.text = getCurrencyChange("7d", data.quotes.usd.change7Days)
@@ -73,7 +73,7 @@ class CurrencyAdapter(
             sb.setSpan(
                     bss,
                     0,
-                    text.indexOf("|") - 2,
+                    text.indexOf("|") - 1,
                     Spannable.SPAN_INCLUSIVE_INCLUSIVE
             )
             return sb
@@ -85,7 +85,7 @@ class CurrencyAdapter(
             sb.setSpan(
                     if(value > 0) fcsGreen else fcsRed,
                     text.indexOf(" ") + 1,
-                    text.lastIndex,
+                    text.lastIndex + 1,
                     Spannable.SPAN_INCLUSIVE_INCLUSIVE
             )
             return sb
