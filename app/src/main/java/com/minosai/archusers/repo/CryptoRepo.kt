@@ -11,6 +11,7 @@ import com.minosai.archusers.db.CryptoDatabase
 import com.minosai.archusers.model.ApiResponse
 import com.minosai.archusers.model.CurrencyData
 import com.minosai.archusers.network.WebService
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -32,7 +33,6 @@ class CryptoRepo(context: Context) {
 
     fun getCryptos(): LiveData<PagedList<CurrencyData>> {
         val count = database.cryptoDao().getCryptoCount()
-        Log.d("CRYPTO_COUNT", count.toString())
         if(count < 1) {
             refreshCryptos()
         }
@@ -45,37 +45,16 @@ class CryptoRepo(context: Context) {
     }
 
     fun refreshCryptos() {
-//        launch {
-//            try {
-//                val request = webService.fetchAllCryptos()
-//                val response = request.await()
-//                if(response.isSuccessful) {
-//                    Log.d("API_RESPONSE", response.body()?.data!!.toString())
-//                    database.cryptoDao().insertCryptos(response.body()?.data!!)
-//                }
-//            } catch (exception: Exception) {
-//
-//            }
-//        }
-
-        Executors.newSingleThreadExecutor().execute {
-            webService.fetchAllCryptos().enqueue(object : Callback<ApiResponse> {
-                override fun onFailure(call: Call<ApiResponse>?, t: Throwable?) {
-                    Log.d("API_RESPONSE_FAILURE", "API RESPONSE FAILURE")
+        launch(UI) {
+            try {
+                val request = webService.fetchAllCryptos()
+                val response = request.await()
+                if(response.isSuccessful) {
+                    database.cryptoDao().insertCryptos(response.body()?.data!!)
                 }
+            } catch (exception: Exception) {
 
-                override fun onResponse(call: Call<ApiResponse>?, response: Response<ApiResponse>?) {
-                    response?.let {
-                        if(response.isSuccessful) {
-                            Log.d("API_RESPONSE", response.body()?.toString())
-                            Executors.newSingleThreadExecutor().execute {
-                                database.cryptoDao().insertCryptos(it.body()?.data!!)
-                            }
-                        }
-                    }
-                }
-
-            })
+            }
         }
     }
 
