@@ -15,24 +15,6 @@ import com.minosai.archusers.model.User
 abstract class CryptoDatabase: RoomDatabase() {
 
     abstract fun cryptoDao(): CryptoDao
+    lateinit var INSTANCE: CryptoDatabase
 
-    companion object {
-        private const val DATABASE_NAME = "cryptodatabase"
-        private var INSTANCE: CryptoDatabase? = null
-
-        fun getInstance(context: Context): CryptoDatabase {
-            if(INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(
-                        context.applicationContext,
-                        CryptoDatabase::class.java,
-                        DATABASE_NAME
-                ).build()
-            }
-            return INSTANCE!!
-        }
-
-        fun destroyInstance() {
-            INSTANCE = null
-        }
-    }
 }

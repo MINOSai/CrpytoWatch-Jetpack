@@ -11,9 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.minosai.archusers.R
+import com.minosai.archusers.di.CryptoApp
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
 import com.minosai.archusers.ui.viewmodel.ViewModelFactory
 import com.minosai.archusers.utils.setChangeText
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -24,7 +26,7 @@ import org.jetbrains.anko.textColor
 class InfoFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private val cryptoViewModel: CryptoViewModel by lazy {
-        ViewModelProviders.of(activity!!, ViewModelFactory(activity!!.application)).get(CryptoViewModel::class.java)
+        ViewModelProviders.of(activity!!).get(CryptoViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

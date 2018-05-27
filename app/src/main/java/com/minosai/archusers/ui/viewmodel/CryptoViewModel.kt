@@ -7,13 +7,12 @@ import android.arch.lifecycle.ViewModel
 import android.arch.paging.PagedList
 import com.minosai.archusers.model.CurrencyData
 import com.minosai.archusers.repo.CryptoRepo
+import javax.inject.Inject
 
 /**
  * Created by minos.ai on 16/05/18.
  */
-class CryptoViewModel(application : Application) : AndroidViewModel(application) {
-
-    val cryptoRepo = CryptoRepo(application)
+class CryptoViewModel @Inject constructor(var cryptoRepo: CryptoRepo) : ViewModel() {
 
     fun getCryptoList() = cryptoRepo.getCryptos()
 

@@ -14,6 +14,7 @@ import com.minosai.archusers.R
 import com.minosai.archusers.adapter.CryptoAdapter
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
 import com.minosai.archusers.ui.viewmodel.ViewModelFactory
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -23,7 +24,7 @@ import org.jetbrains.anko.bundleOf
 class ListFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private val cryptoViewModel: CryptoViewModel by lazy {
-        ViewModelProviders.of(activity!!, ViewModelFactory(activity!!.application)).get(CryptoViewModel::class.java)
+        ViewModelProviders.of(activity!!).get(CryptoViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

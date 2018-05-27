@@ -7,20 +7,27 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.Navigation
 import com.minosai.archusers.R
+import com.minosai.archusers.di.CryptoApp
 import com.minosai.archusers.network.WebService
 import com.minosai.archusers.ui.fragment.InfoFragment
 import com.minosai.archusers.ui.fragment.ListFragment
+import dagger.android.AndroidInjection
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(),
         ListFragment.OnFragmentInteractionListener,
-        InfoFragment.OnFragmentInteractionListener{
+        InfoFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        AndroidInjection.inject(this)
+
+        (application as CryptoApp).initDagger()
+
 //        setSupportActionBar(toolbar)
 //
 //        fab.setOnClickListener { view ->
@@ -44,13 +51,6 @@ class MainActivity : AppCompatActivity(),
 //            }
 //
 //        })
-
-        val resId = resources.getIdentifier(
-                "btc",
-                "drawable",
-                packageName
-        )
-        Log.i("RESID_CHECK", resId.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

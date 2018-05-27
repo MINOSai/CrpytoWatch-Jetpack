@@ -14,18 +14,6 @@ import retrofit2.http.GET
  */
 interface WebService {
 
-    @GET("v2/ticker/?structure=array")
+    @GET("?structure=array")
     fun fetchAllCryptos(): Deferred<Response<ApiResponse>>
-
-    companion object {
-        fun create(): WebService {
-            val retrofit = Retrofit.Builder()
-                    .baseUrl("http://api.coinmarketcap.com/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                    .build()
-
-            return retrofit.create(WebService::class.java)
-        }
-    }
 }
