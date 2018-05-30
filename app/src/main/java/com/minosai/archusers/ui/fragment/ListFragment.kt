@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.minosai.archusers.R
 import com.minosai.archusers.adapter.CryptoAdapter
+import com.minosai.archusers.di.CryptoApp
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
 import com.minosai.archusers.ui.viewmodel.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
@@ -20,12 +21,11 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.bundleOf
+import javax.inject.Inject
 
 class ListFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-    private val cryptoViewModel: CryptoViewModel by lazy {
-        ViewModelProviders.of(activity!!).get(CryptoViewModel::class.java)
-    }
+    private lateinit var cryptoViewModel: CryptoViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,6 +35,8 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        cryptoViewModel = ViewModelProviders.of(this).get(CryptoViewModel::class.java)
 
         val adapter = CryptoAdapter{ currencyData ->
             var bundle = bundleOf("cryptoid" to currencyData.id)

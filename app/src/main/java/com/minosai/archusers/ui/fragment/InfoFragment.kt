@@ -25,9 +25,7 @@ import org.jetbrains.anko.textColor
 
 class InfoFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-    private val cryptoViewModel: CryptoViewModel by lazy {
-        ViewModelProviders.of(activity!!).get(CryptoViewModel::class.java)
-    }
+    private lateinit var cryptoViewModel: CryptoViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,6 +35,8 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        cryptoViewModel = ViewModelProviders.of(this).get(CryptoViewModel::class.java)
 
         val cryptoData = async {
             cryptoViewModel.getCryptoById(arguments?.getInt("cryptoid", 0)!!)

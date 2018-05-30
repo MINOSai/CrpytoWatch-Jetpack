@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(),
 
 //        AndroidInjection.inject(this)
 
-        (application as CryptoApp).initDagger()
+        CryptoApp.cryptoComponent.inject(this)
 
 //        setSupportActionBar(toolbar)
 //

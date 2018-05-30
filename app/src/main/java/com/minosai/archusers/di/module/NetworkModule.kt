@@ -23,19 +23,19 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGson() = GsonBuilder().create()
+    fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
     @Singleton
-    fun provideOkHttpCache(application: Application) = Cache(application.cacheDir, 10 * 1024 * 1024)
+    fun provideOkHttpCache(application: Application): Cache = Cache(application.cacheDir, 10 * 1024 * 1024)
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(cache: Cache) = OkHttpClient.Builder().cache(cache).build()
+    fun provideOkHttpClient(cache: Cache): OkHttpClient = OkHttpClient.Builder().cache(cache).build()
 
     @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient) = Retrofit.Builder()
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
             .baseUrl("http://api.coinmarketcap.com/v2ticker/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
@@ -44,5 +44,5 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideWebService(restAdapter: Retrofit) = restAdapter.create(WebService::class.java)
+    fun provideWebService(restAdapter: Retrofit): WebService = restAdapter.create(WebService::class.java)
 }

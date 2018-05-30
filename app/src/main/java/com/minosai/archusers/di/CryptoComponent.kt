@@ -4,6 +4,7 @@ import android.app.Application
 import com.minosai.archusers.di.module.AppModule
 import com.minosai.archusers.di.module.DataModule
 import com.minosai.archusers.di.module.NetworkModule
+import com.minosai.archusers.ui.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -12,12 +13,12 @@ import javax.inject.Singleton
 @Component(modules = [(AppModule::class), (DataModule::class), (NetworkModule::class)])
 interface CryptoComponent {
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: Application) : Builder
-        fun build() : CryptoComponent
-    }
+//    @Component.Builder
+//    interface Builder {
+//        @BindsInstance
+//        fun application(application: Application) : Builder
+//        fun build() : CryptoComponent
+//    }
 
-    fun inject(cryptoApp: CryptoApp)
+    fun inject(cryptoApp: MainActivity)
 }

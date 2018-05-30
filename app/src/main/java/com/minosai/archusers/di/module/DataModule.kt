@@ -15,7 +15,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(application: Application) = Room.databaseBuilder(
+    fun provideDatabase(application: Application): CryptoDatabase = Room.databaseBuilder(
             application,
             CryptoDatabase::class.java,
             "cryptodatabase"
@@ -23,9 +23,9 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideDao(database: CryptoDatabase) = database.cryptoDao()
+    fun provideDao(database: CryptoDatabase): CryptoDao = database.cryptoDao()
 
     @Provides
     @Singleton
-    fun provideRepository(webService: WebService, dao: CryptoDao) = CryptoRepo(webService, dao)
+    fun provideRepository(webService: WebService, dao: CryptoDao): CryptoRepo = CryptoRepo(webService, dao)
 }
