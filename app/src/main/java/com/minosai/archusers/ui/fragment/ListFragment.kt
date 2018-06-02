@@ -1,6 +1,7 @@
 package com.minosai.archusers.ui.fragment
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
@@ -12,9 +13,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.minosai.archusers.R
 import com.minosai.archusers.adapter.CryptoAdapter
-import com.minosai.archusers.di.CryptoApp
+import com.minosai.archusers.di.Injectable
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
-import com.minosai.archusers.ui.viewmodel.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.coroutines.experimental.android.UI
@@ -23,8 +23,12 @@ import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.bundleOf
 import javax.inject.Inject
 
-class ListFragment : Fragment() {
+class ListFragment() : Fragment(), Injectable {
     private var listener: OnFragmentInteractionListener? = null
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var cryptoViewModel: CryptoViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +38,10 @@ class ListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        AndroidSupportInjection.inject(this)
         super.onViewCreated(view, savedInstanceState)
 
-        cryptoViewModel = ViewModelProviders.of(this).get(CryptoViewModel::class.java)
+        cryptoViewModel = ViewModelProviders.of(this, viewModelFactory).get(CryptoViewModel::class.java)
 
         val adapter = CryptoAdapter{ currencyData ->
             var bundle = bundleOf("cryptoid" to currencyData.id)

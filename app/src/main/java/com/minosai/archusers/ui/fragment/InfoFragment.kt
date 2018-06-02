@@ -1,19 +1,17 @@
 package com.minosai.archusers.ui.fragment
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.minosai.archusers.R
-import com.minosai.archusers.di.CryptoApp
+import com.minosai.archusers.di.Injectable
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
-import com.minosai.archusers.ui.viewmodel.ViewModelFactory
 import com.minosai.archusers.utils.setChangeText
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_info.*
@@ -21,10 +19,12 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.textColor
+import javax.inject.Inject
 
-class InfoFragment : Fragment() {
+class InfoFragment() : Fragment(), Injectable {
     private var listener: OnFragmentInteractionListener? = null
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var cryptoViewModel: CryptoViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +34,10 @@ class InfoFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        AndroidSupportInjection.inject(this)
         super.onViewCreated(view, savedInstanceState)
 
-        cryptoViewModel = ViewModelProviders.of(this).get(CryptoViewModel::class.java)
+        cryptoViewModel = ViewModelProviders.of(this, viewModelFactory).get(CryptoViewModel::class.java)
 
         val cryptoData = async {
             cryptoViewModel.getCryptoById(arguments?.getInt("cryptoid", 0)!!)

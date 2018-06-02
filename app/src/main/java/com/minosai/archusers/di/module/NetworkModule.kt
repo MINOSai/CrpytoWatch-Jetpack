@@ -37,9 +37,8 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
             .baseUrl("http://api.coinmarketcap.com/v2ticker/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .client(okHttpClient)
             .build()
 
     @Provides

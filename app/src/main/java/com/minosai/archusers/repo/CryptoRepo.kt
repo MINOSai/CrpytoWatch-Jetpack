@@ -22,16 +22,19 @@ import retrofit2.Response
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.coroutines.experimental.coroutineContext
 
 /**
  * Created by minos.ai on 10/05/18.
  */
 
+@Singleton
 class CryptoRepo @Inject constructor(val webService: WebService, val dao: CryptoDao) {
 
     fun getCryptos(): LiveData<PagedList<CurrencyData>> {
         val count = dao.getCryptoCount()
+        Log.d("CRYPTO-COUNT", count.toString())
         if(count < 1) {
             refreshCryptos()
         }
@@ -44,15 +47,18 @@ class CryptoRepo @Inject constructor(val webService: WebService, val dao: Crypto
     }
 
     fun refreshCryptos() {
-        launch {
-            try {
-                val request = webService.fetchAllCryptos()
-                val response = request.await()
-                if(response.isSuccessful) {
-                    dao.insertCryptos(response.body()?.data!!)
-                }
-            } catch (exception: Exception) {
+        Executors.newSingleThreadExecutor().execute {
+            launch {
+                try {
+                    val request = webService.fetchAllCryptos()
+                    val response = request.await()
+                    if(response.isSuccessful) {
+                        Log.d("CRYPTO-RESPONSE", response.body()?.data.toString())
+                        dao.insertCryptos(response.body()?.data!!)
+                    }
+                } catch (exception: Exception) {
 
+                }
             }
         }
     }

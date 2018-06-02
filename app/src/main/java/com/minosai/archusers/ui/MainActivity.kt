@@ -1,32 +1,35 @@
 package com.minosai.archusers.ui
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.Navigation
 import com.minosai.archusers.R
-import com.minosai.archusers.di.CryptoApp
-import com.minosai.archusers.network.WebService
 import com.minosai.archusers.ui.fragment.InfoFragment
 import com.minosai.archusers.ui.fragment.ListFragment
 import dagger.android.AndroidInjection
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(),
         ListFragment.OnFragmentInteractionListener,
-        InfoFragment.OnFragmentInteractionListener {
+        InfoFragment.OnFragmentInteractionListener,
+        HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
 //        AndroidInjection.inject(this)
 
-        CryptoApp.cryptoComponent.inject(this)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
 //        setSupportActionBar(toolbar)
 //
@@ -34,23 +37,6 @@ class MainActivity : AppCompatActivity(),
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
 //        }
-
-//        val webService: WebService = WebService.create()
-//        webService.fetchAllCryptos().enqueue(object : Callback<Any> {
-//            override fun onFailure(call: Call<Any>?, t: Throwable?) {
-//                Log.d("API_RESPONSE_FAILURE", "API RESPONSE FAILURE")
-//            }
-//
-//            override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
-//                response?.let {
-//                    if(response.isSuccessful) {
-//                        Log.d("API_RESPONSE", response.body()?.toString())
-////                        database.cryptoDao().insertCryptos(it.body()?.data!!)
-//                    }
-//                }
-//            }
-//
-//        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -12,14 +12,7 @@ import javax.inject.Inject
 /**
  * Created by minos.ai on 16/05/18.
  */
-class CryptoViewModel : ViewModel() {
-
-    @Inject lateinit var cryptoRepo: CryptoRepo
-
-//    @Inject
-//    constructor(cryptoRepo: CryptoRepo): this() {
-//        this.cryptoRepo = cryptoRepo
-//    }
+class CryptoViewModel @Inject constructor(val cryptoRepo: CryptoRepo): ViewModel() {
 
     fun getCryptoList() = cryptoRepo.getCryptos()
 

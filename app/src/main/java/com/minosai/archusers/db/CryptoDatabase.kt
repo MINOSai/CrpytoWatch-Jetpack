@@ -11,7 +11,7 @@ import com.minosai.archusers.model.User
  * Created by minos.ai on 10/05/18.
  */
 
-@Database(entities = [(CurrencyData::class)], version = 1)
+@Database(entities = [(CurrencyData::class)], version = 1, exportSchema = false)
 abstract class CryptoDatabase: RoomDatabase() {
 
     abstract fun cryptoDao(): CryptoDao
