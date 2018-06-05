@@ -9,8 +9,7 @@ import androidx.navigation.Navigation
 import com.minosai.archusers.R
 import com.minosai.archusers.ui.fragment.InfoFragment
 import com.minosai.archusers.ui.fragment.ListFragment
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
+import com.minosai.archusers.utils.NotificationHelper
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -30,6 +29,8 @@ class MainActivity : AppCompatActivity(),
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        NotificationHelper.notifyRefresh(this)
 
 //        setSupportActionBar(toolbar)
 //
