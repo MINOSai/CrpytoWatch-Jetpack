@@ -12,8 +12,10 @@
         <action
             android:id="@+id/action_listFragment_to_infoFragment"
             app:destination="@id/infoFragment"
-            app:enterAnim="@animator/slide_in_right"
-            app:exitAnim="@animator/slide_out_left">
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
             <argument
                 android:name="userid"
                 android:defaultValue="0" />

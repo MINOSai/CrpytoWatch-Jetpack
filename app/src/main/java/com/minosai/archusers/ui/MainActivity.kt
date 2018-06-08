@@ -1,23 +1,34 @@
 package com.minosai.archusers.ui
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.Navigation
+import androidx.work.*
 import com.minosai.archusers.R
 import com.minosai.archusers.ui.fragment.InfoFragment
 import com.minosai.archusers.ui.fragment.ListFragment
-import com.minosai.archusers.utils.NotificationHelper
+import com.minosai.archusers.utils.AlarmReceiver
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
+import com.minosai.archusers.utils.RefreshWorker
+import java.util.concurrent.TimeUnit
+
 
 class MainActivity : AppCompatActivity(),
         ListFragment.OnFragmentInteractionListener,
         InfoFragment.OnFragmentInteractionListener,
         HasSupportFragmentInjector {
+
+    val REFRESH_WORKER_TAG = "com.minosai.archusers.worker.REFRESH_WORKER"
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -29,15 +40,27 @@ class MainActivity : AppCompatActivity(),
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.title = "Cryptos"
 
-        NotificationHelper.notifyRefresh(this)
+//        startWorker()
+        startAlarmManager()
 
-//        setSupportActionBar(toolbar)
-//
 //        fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
 //        }
+    }
+
+    private fun startAlarmManager() {
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val currentTimeInMilli: Long = SystemClock.elapsedRealtime()
+        val ONE_DAY = 24 * 60 * 60 * 1000
+        val alarmTime = currentTimeInMilli + ONE_DAY
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME, alarmTime, pendingIntent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,18 +80,18 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onFragmentInteraction(string: String) {
-        supportActionBar?.title = string
+//        supportActionBar?.title = string
     }
 
     override fun onSupportNavigateUp(): Boolean = Navigation.findNavController(this, R.id.fragment_nav_host).navigateUp()
 
-    fun getResId(resName: String, c: Class<*>): Int {
-        try {
-            val idField = c.getDeclaredField(resName)
-            return idField.getInt(idField)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return -1
-        }
+    fun startWorker() {
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+        val refreshWork = PeriodicWorkRequestBuilder<RefreshWorker>(15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build()
+        WorkManager.getInstance().enqueue(refreshWork)
     }
 }

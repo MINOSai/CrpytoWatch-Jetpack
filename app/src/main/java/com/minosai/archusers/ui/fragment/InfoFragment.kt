@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.minosai.archusers.di.Injectable
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
 import com.minosai.archusers.utils.setChangeText
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -22,10 +24,14 @@ import org.jetbrains.anko.imageResource
 import javax.inject.Inject
 
 class InfoFragment() : Fragment(), Injectable {
-    private var listener: OnFragmentInteractionListener? = null
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private var listener: OnFragmentInteractionListener? = null
     private lateinit var cryptoViewModel: CryptoViewModel
+    private var cryptoId = 0
+    private lateinit var watchList: ArrayList<Int>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -39,9 +45,12 @@ class InfoFragment() : Fragment(), Injectable {
 
         cryptoViewModel = ViewModelProviders.of(this, viewModelFactory).get(CryptoViewModel::class.java)
 
+        cryptoId = arguments?.getInt("cryptoid", 0)!!
+
         val cryptoData = async {
-            cryptoViewModel.getCryptoById(arguments?.getInt("cryptoid", 0)!!)
+            cryptoViewModel.getCryptoById(cryptoId)
         }
+
         launch(UI) {
             val currencyData = cryptoData.await()
             activity?.let {
@@ -53,6 +62,13 @@ class InfoFragment() : Fragment(), Injectable {
                     text_info_change_24h.setChangeText(data.quotes.usd.change24Hours)
                     text_info_change_7d.setChangeText(data.quotes.usd.change7Days)
                 })
+            }
+        }
+
+        activity?.fab?.let { fab ->
+            fab.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_bookmark_white_24dp))
+            fab.setOnClickListener {
+                cryptoViewModel.addToWatchList(cryptoId)
             }
         }
     }

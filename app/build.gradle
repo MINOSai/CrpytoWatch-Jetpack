@@ -51,7 +51,7 @@ dependencies {
     def room_version = "1.1.0"
     def paging_version = "1.0.0"
     def nav_version = "1.0.0-alpha01"
-    def work_version = "1.0.0-alpha01"
+    def work_version = "1.0.0-alpha02"
 
     // Room
     implementation "android.arch.persistence.room:runtime:$room_version"
@@ -69,7 +69,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
 
     // WorkManager
-//    implementation "android.arch.work:work-runtime-ktx:$work_version"
+    implementation "android.arch.work:work-runtime-ktx:$work_version"
 
     // Material
 //    compile 'com.google.android.material:material:1.0.0-alpha1'
