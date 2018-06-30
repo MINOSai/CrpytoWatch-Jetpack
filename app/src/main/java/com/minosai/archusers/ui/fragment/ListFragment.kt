@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,13 +17,11 @@ import com.minosai.archusers.adapter.CryptoAdapter
 import com.minosai.archusers.di.Injectable
 import com.minosai.archusers.ui.viewmodel.CryptoViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.bundleOf
-import org.jetbrains.anko.imageResource
 import javax.inject.Inject
 
 class ListFragment() : Fragment(), Injectable {
@@ -54,7 +50,7 @@ class ListFragment() : Fragment(), Injectable {
         }
 
         initRecyclerView()
-        poplulateRecyclerView()
+        populateRecyclerView()
 
         activity?.fab?.let { fab ->
             fab.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_refresh_white_24dp))
@@ -62,7 +58,7 @@ class ListFragment() : Fragment(), Injectable {
         }
     }
 
-    private fun poplulateRecyclerView() {
+    private fun populateRecyclerView() {
         val listData = async {
             cryptoViewModel.getCryptoList()
         }
