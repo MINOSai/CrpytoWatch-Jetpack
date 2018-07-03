@@ -15,3 +15,7 @@ data class CurrencyData(
         @SerializedName("rank") @Expose var rank: Int = 0,
         @SerializedName("quotes") @Expose @Embedded var quotes: Quotes = Quotes()
 )
+
+class Student {
+
+}
