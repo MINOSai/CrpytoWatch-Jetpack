@@ -1,5 +1,5 @@
 # CrpytoWatch
-An Cryptocurrency tracker :money_with_wings: built for riding Android Jetpack :rocket:. During Google IO18 the Android team released some new libraries along with existing Android Architecture Components. This is aims to use most of <u>AAC</u> libraries in <u>MVVM</u> architecture and serve as a sample written in **Kotlin** :muscle:
+An Cryptocurrency tracker :money_with_wings: built for riding Android Jetpack :rocket:. During Google IO18 the Android team released some new libraries along with existing Android Architecture Components. This app aims to use most of <u>AAC</u> libraries in <u>MVVM</u> architecture and serve as a sample written in **Kotlin** :muscle:
 
 
 
